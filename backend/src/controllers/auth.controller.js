@@ -4,6 +4,7 @@ import User from "../models/user.model.js";
 import { generateToken } from "../lib/util.js";
 
 export const signup = async (req, res) => {
+    // console.log(req.body)
     const { fullName, email, password } = req.body;
     try {
         // Check if user already exists
@@ -19,7 +20,7 @@ export const signup = async (req, res) => {
             email,
             password: hashedPassword,
         });
-        generateToken(newUser._id,res)
+        const token = generateToken(newUser._id, res);
         await newUser.save();
         // Generate JWT token
        
@@ -36,7 +37,9 @@ export const signup = async (req, res) => {
         res.status(500).json({ message: "Something went wrong", error: error.message });
     }
 };
-
+export const testup=(req,res)=>{
+    res.send("login route");
+}
 export const login=(req,res)=>{
     res.send("login route");
 }
