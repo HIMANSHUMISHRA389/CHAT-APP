@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
+import { useAuthStore } from '../store/useAuthStore';
 
 function Navbar() {
+  const{authUser}=useAuthStore()
   return (
     <nav className="navbar">
       <div className="logo">
