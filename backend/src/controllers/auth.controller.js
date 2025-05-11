@@ -4,8 +4,8 @@ import User from "../models/user.model.js";
 import { generateToken } from "../lib/util.js";
 import cloudinary from "../lib/cloudinary.js";
 export const signup = async (req, res) => {
-    // console.log(req.body)
-    const { fullName, email, password } = req.body;
+    console.log(req.body)
+    const { fullname, email, password } = req.body;
     try {
         // Check if user already exists
         const existingUser = await User.findOne({ email });
@@ -16,7 +16,7 @@ export const signup = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         // Create new user
         const newUser = new User({
-            fullname: fullName,
+            fullname: fullname,
             email,
             password: hashedPassword,
         });
