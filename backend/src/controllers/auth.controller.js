@@ -87,9 +87,23 @@ export const updateProfile = async (req, res) => {
 
 export const checkAuth = async (req, res) => {
     try {
-        res.status(200).json(req.user);
+        // Get the user ID from the authenticated request
+        const userId = req.user._id;
+        
+        console.log(userId)
+        // Fetch the full user document from the database
+        // Using select("-password") to exclude the password field
+        const freshUserData = await User.findById(userId).select("-password");
+        console.log(freshUserData)
+        // If user not found, return error
+        if (!freshUserData) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        
+        // Return the fresh user data from the database
+        res.status(200).json(freshUserData);
     } catch (error) {
-        console.log("Error in checkAuth controller", error.nessage)
-        res.statuus(500).json({ message: "Internal Server Error" })
+        console.log("Error in checkAuth controller", error.message);
+        res.status(500).json({ message: "Internal Server Error" });
     }
 }
